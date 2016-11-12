@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {fetchUsers} from '../actions/userActions';
 
@@ -8,27 +9,26 @@ import {fetchUsers} from '../actions/userActions';
     users: store.user.users,
     fetching: store.user.fetching,
   };
+}, (dispatch) =>{
+  return bindActionCreators({
+    fetchUsers
+  }, dispatch);
 })
 class App extends React.Component{
 
   constructor(props){
     super(props);
-    this.updateUserList = this.updateUserList.bind(this);
-  }
-
-  updateUserList(){
-    this.props.dispatch(fetchUsers());
   }
 
   render(){
-    const {users, fetching} = this.props;
-    let userList = users.map((user, index) => 
-      <li key={index}>{user.name}</li>
+    const {users, fetching, fetchUsers} = this.props;
+    let userList = users.map((user) => 
+      <li key={user.id}>{user.name}</li>
     ).filter((user, index) => index < 2);
     return (
       <div>
         <h2>Hello World</h2>
-        <button onClick={this.updateUserList}>Update Users</button><br/>
+        <button onClick={fetchUsers}>Update Users</button><br/>
         {fetching ?
             <span>Loading...</span>
           :
