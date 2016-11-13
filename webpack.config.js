@@ -47,7 +47,10 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loader: 'babel'
+                loader: 'babel',
+                query: {
+                  plugins: ['transform-decorators-legacy']
+                }
             },
             {
                 test: /\.json?$/,

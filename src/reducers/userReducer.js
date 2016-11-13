@@ -1,6 +1,11 @@
 const initialState = {
   fetching: false,
   fetched: false,
+  user: {
+    id: null,
+    name: null, 
+    age: null
+  },
   users: [],
   error: null
 };
@@ -36,7 +41,7 @@ export default function(state=initialState,  action){
         ...state,
         fetching: false,
         fetched: true,
-        users: [action.payload]
+        user: action.payload
       };
   }
 
