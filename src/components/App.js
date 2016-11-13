@@ -28,9 +28,12 @@ class App extends React.Component{
     return (
       <div>
         <h2>Hello World</h2>
-        <span>Fetching: {fetching? "False": "True"}</span><br/><br/>
         <button onClick={this.updateUserList}>Update Users</button><br/>
-        <ul>{userList}</ul>
+        {fetching ?
+            <span>Loading...</span>
+          :
+            <ul>{userList}</ul>
+        }
       </div>
     );
   }
