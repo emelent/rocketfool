@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+const api = 'http://rest.learncode.academy/api';
 export function fetchUsers(){
   return (dispatch) =>{
     dispatch({type: 'FETCH_USERS_PENDING'});
-    axios.get('http://rest.learncode.academy/api/wstern/users')
+    axios.get(`${api}/wstern/users`)
       .then((response) => {
         dispatch({type: 'FETCH_USERS_FULFILLED', payload: response.data});
       })
