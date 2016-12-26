@@ -1,7 +1,7 @@
 {
-  "name": "beginner-redux",
+  "name": "rocketfool",
   "version": "1.0.0",
-  "description": "Beginner Redux Tutorial",
+  "description": "",
   "main": "src/index.js",
   "scripts": {
     "test": "",
@@ -11,32 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/emelent/beginner-redux.git"
+    "url": "git+ssh://git@github.com/emelent/rocketfool.git"
   },
   "keywords": [
-    "Beginner",
-    "Redux",
-    "Tutorial"
   ],
   "author": "Merrick",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/emelent/beginner-redux/issues"
+    "url": "https://github.com/emelent/rocketfool/issues"
   },
-  "homepage": "https://github.com/emelent/beginner-redux#readme",
+  "homepage": "https://github.com/emelent/rocketfool#readme",
   "dependencies": {
-    "axios": "^0.15.2",
-    "file-loader": "^0.9.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-hot-loader": "^3.0.0-beta.6",
-    "react-redux": "^4.4.5",
-    "react-router": "^3.0.0",
-    "react-router-redux": "^4.0.7",
-    "redux": "^3.6.0",
-    "redux-promise-middleware": "^4.1.0"
-  },
-  "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.8.0",
     "babel-eslint": "^6.0.4",
@@ -70,6 +55,17 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "axios": "^0.15.2",
+    "file-loader": "^0.9.0",
+    "font-awesome": "^4.7.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "react-redux": "^4.4.5",
+    "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-promise-middleware": "^4.1.0"
   }
 }

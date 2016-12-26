@@ -8,6 +8,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import store from './store';
 import Main from './layouts/Main';
 
+import 'font-awesome/scss/font-awesome.scss';
+import './styles/style.scss';
+
 // Create an enhanced history that syncs navigation events with the store 
 const history = syncHistoryWithStore(hashHistory, store);
  

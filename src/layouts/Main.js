@@ -1,14 +1,14 @@
 import React from 'react';
 
-import UserList from '../containers/UserList';
+import Header from './Header';
+
 
 
 class Main extends React.Component{
   render(){
     return(
       <div>
-        <h1>User List</h1>
-        <UserList />
+        <Header />
       </div>
     );
   }
