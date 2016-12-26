@@ -3,21 +3,24 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import CustomButton from './CustomButton.js';
+import CustomButton from '../components/CustomButton.js';
 import {fetchUsers} from '../actions/userActions';
-import style from '../style.scss';
 
-@connect((store) => {
+const mapStateToProps = (state) => {
   return {
-    users: store.user.users,
-    fetching: store.user.fetching,
+    users: state.user.users,
+    fetching: state.user.fetching,
   };
-}, (dispatch) =>{
+}; 
+
+const mapDispatchToProps = (dispatch) =>{
   return bindActionCreators({
     fetchUsers
   }, dispatch);
-})
-class App extends React.Component{
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+class UserList extends React.Component{
 
   constructor(props){
     super(props);
@@ -34,13 +37,12 @@ class App extends React.Component{
         transitionAppear={true} transitionAppearTimeout={0}
         transitionEnter={false} transitionLeave={false}
       >
-        <h2>Hello World</h2>
         <CustomButton kind="primary" onClick={fetchUsers}>
-          Update Users
+          Reload User 
         </CustomButton>
         <br/>
         {fetching ?
-            <span>Loading...</span>
+            <span>Wait for it...</span>
           :
             <ul>{userList}</ul>
         }
@@ -49,4 +51,4 @@ class App extends React.Component{
   }
 }
 
-export default App;
+export default UserList;

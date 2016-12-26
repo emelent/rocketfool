@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "",
-    "start": "webpack --progress --colors --config ./webpack.config.js",
+    "start": "webpack-dev-server --hot --inline --progress --colors --config ./webpack.config.js",
     "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint ."
   },
