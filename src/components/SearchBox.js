@@ -42,6 +42,8 @@ const styles = {
   }
 };
 
+const voidFunc = () => {};
+
 @Radium
 class SearchBox extends React.Component{
   static propTypes = {
@@ -51,6 +53,8 @@ class SearchBox extends React.Component{
     placeholder: React.PropTypes.string,
     onSubmit: React.PropTypes.func,
     onChange: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
   };  
 
   static defaultProps = {
@@ -58,6 +62,9 @@ class SearchBox extends React.Component{
     width: '200px',
     height: '60px',
     focusWidth: '70%',
+    onSubmit: voidFunc,
+    onFocus: voidFunc,
+    onBlur: voidFunc,
   };
 
   constructor(props){
@@ -72,16 +79,16 @@ class SearchBox extends React.Component{
 
   __onFocus(){
     this.setState({focused: true});
+    this.props.onFocus();
   }
 
   __onBlur(){
     this.setState({focused: false});
+    this.props.onBlur();
   }
 
   __onSubmit(){
-    if(this.props.onSubmit){
-      this.props.onSubmit(this.state.value);
-    }
+    this.props.onSubmit(this.state.value);
   }
 
   __onChange(event){
