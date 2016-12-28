@@ -7,7 +7,9 @@ const styles = {
     color: '#555',
     transition: 'all 0.4s ease',
   },
-
+  focusedContainer:{
+    background: '#fff',
+  },
   iconContainer: {
     float: 'left',
     width: '44px',
@@ -32,8 +34,8 @@ const styles = {
     fontSize: '1.1em',
     background: 'none',
 
-    '::-webkit-input-placeholder': {
-      color: '#000'
+    '::-webkit-input-placeholder':{
+      color: 'red'
     },
 
     ':focus':{
@@ -49,6 +51,7 @@ class SearchBox extends React.Component{
   static propTypes = {
     height: React.PropTypes.string,
     width: React.PropTypes.string,
+    focusStyle: React.PropTypes.object,
     focusWidth: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     onSubmit: React.PropTypes.func,
@@ -62,6 +65,7 @@ class SearchBox extends React.Component{
     width: '200px',
     height: '60px',
     focusWidth: '70%',
+    focusStyle: {},
     onSubmit: voidFunc,
     onFocus: voidFunc,
     onBlur: voidFunc,
@@ -108,15 +112,22 @@ class SearchBox extends React.Component{
   }
 
   render(){
-    let {height, width, focusWidth, placeholder, style, onSubmit} = this.props;
+    let {height, width, focusWidth, placeholder, style, onSubmit,
+      focusStyle} = this.props;
     
     if(this.state.focused){
       width = focusWidth;
+      style = {...style, ...styles.focusedContainer,
+      ...focusStyle};
     }
 
     return(
-      <div style={{...styles.container, ...style, width, height}}>
-        <div style={{...styles.iconContainer, lineHeight: height}}>
+      <div className='searchbox' 
+        style={{...styles.container, width, height, ...style}}
+      >
+        <div style={{...styles.iconContainer, lineHeight: height}}
+          onClick={this.__onSubmit}
+        >
           <i className="fa fa-search"></i>
         </div>
         <div style={styles.inputContainer}>
