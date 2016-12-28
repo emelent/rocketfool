@@ -16,6 +16,7 @@ const styles = {
     height: '100%',
     overflow: 'hidden',
     textAlign: 'center',
+    cursor: 'pointer',
   },
 
   inputContainer: {
