@@ -38,7 +38,7 @@ class TabBar extends React.Component {
     align: 'left',
     bgColor: '#fff',
     fgColor: '#000',
-    underline: '#000',
+    underline: '#673AB7',
     active: null,
     shadow: false,
     onItemClick: () => {},
