@@ -1,10 +1,24 @@
 import React from 'react';
 
-import SearchBox from '../components/SearchBox';
-import TabBar from '../components/TabBar';
+//import TabSearch from '../components/TabSearch';
+import DropDownSearch from '../components/DropDownSearch';
 
 
-const tabItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
+const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
+
+const styles = {
+  container:{
+    background: 'url("/assets/images/header-bg.jpg")',
+    backgroundSize: 'cover',
+    backgroundAttachment: 'fixed',
+    minHeight: '100vh',
+    color: '#fff',
+  },
+
+  searchBox:{
+    margin: 'auto',
+  }
+};
 
 class Header extends React.Component{
   constructor(props){
@@ -20,15 +34,20 @@ class Header extends React.Component{
     console.log('active => ', i);
   }
 
+  __onSearchSubmit(text){
+    alert(`You search '${text}'`);
+  }
+
   render(){
     return (
-      <div>
-        <h2>Header</h2>
-        <SearchBox />
-        <TabBar items={tabItems} 
-          activeIndex={this.state.activeIndex}
-          onItemClick={this.__onTabItemClick}
-        />
+      <div style={styles.container}>
+        <div>Header</div>
+        <div style={{textAlign: 'center'}}>
+          <DropDownSearch style={styles.searchBox}
+            items={dropDownItems}
+            onSearchSubmit={this.__onSearchSubmit}
+          />
+        </div>
       </div>
     );
   }
