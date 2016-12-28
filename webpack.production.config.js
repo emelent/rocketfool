@@ -5,6 +5,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var StatsPlugin = require('stats-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // The entry file. All your app roots fromn here.
@@ -18,6 +19,10 @@ module.exports = {
         publicPath: '/'
     },
     plugins: [
+        new CopyWebpackPlugin([{
+          from: 'src/assets', 
+          to: 'assets'
+        }]),
         // webpack gives your modules and chunks ids to identify them. Webpack can vary the
         // distribution of the ids to get the smallest id length for often used ids with
         // this plugin
