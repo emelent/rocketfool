@@ -5,40 +5,68 @@ import color from 'color';
 
 const styles = {
   base: {
-    padding: "1.5em 2em",
-    border: "0px",
-    cursor: "pointer",
-    fontSize: "1rem",
+    display: 'inline-block',
+    border: '0px',
+    cursor: 'pointer',
+    fontSize: '1em',
     fontWeight: 700,
-  },
-  primary: {
-    backgroundColor: "#0074D9",
-    color: "#ffffff",
-    ":hover": {
-      backgroundColor: color("#0074d9").lighten(0.2).hexString()
-    }
-  },
-  warning: {
-    backgroundColor: "#F5A623",
-    color: "#ffffff",
-    ":hover": {
-      backgroundColor: color("#F5A623").darken(0.2).hexString()
-    }
+    fontFamily: 'Raleway',
+    transition: 'all 0.3s cubic-bezier(.17,.67,.17,.88)',
   },
   disabled: {
     opacity: .4,
-    cursor: "not-allowed"
+    cursor: 'not-allowed'
   }
 };
+
 @Radium
 class CustomButton extends React.Component{
   static propTypes = {
-    kind: React.PropTypes.oneOf(['primary', 'warning', 'disabled']).isRequired
+    bgColor: React.PropTypes.string,
+    fgColor: React.PropTypes.string,
+    darken: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    hover: React.PropTypes.bool,
+    alpha: React.PropTypes.number,
+  };
+
+  static defaultProps = {
+    bgColor: '#673AB7',
+    fgColor: '#fff',
+    darken: false,
+    hover: true,
+    alpha: 0.2,
+    disabled: false,
   };
 
   render(){
+    let {style, bgColor, fgColor, darken, alpha, disabled, onClick,
+      hover} = this.props; 
+
+    if(disabled){
+      style = {...styles.base, ...style, ...styles.disabled};
+    }else{
+      style = {
+        ...styles.base,
+        backgroundColor: bgColor,
+        color: fgColor,
+        ...style,
+      };
+      if(hover){
+        if(darken){
+          style[':hover'] = {
+            backgroundColor: color(bgColor).darken(alpha).hexString()
+          };
+        }else{
+          style[':hover'] = {
+            backgroundColor: color(bgColor).lighten(alpha).hexString()
+          };
+        }
+      }
+    }
+
     return ( 
-      <button style={[styles.base, styles[this.props.kind]]} onClick={this.props.onClick}>
+      <button style={style} onClick={onClick}>
         {this.props.children}
       </button>
     );
