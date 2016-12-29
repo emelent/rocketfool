@@ -5,6 +5,7 @@ import SearchBox from './SearchBox';
 
 const styles = {
   container: {
+    position: 'relative',
     display: 'inline-block',
     height: '60px',
     minWidth: '280px',
@@ -40,6 +41,9 @@ const styles = {
   },
 
   list:{
+    position: 'absolute',
+    zIndex: '1',
+    width: '100%',
     maxHeight: '300px', 
     overflowY: 'scroll',
     background: '#fff',
@@ -84,6 +88,7 @@ class DropDownSearch extends React.Component{
     onOpen: React.PropTypes.func,
     onClose: React.PropTypes.func,
     onSearchSubmit: React.PropTypes.func,
+    focusWidth: React.PropTypes.string,
   };
 
   static defaultProps = {
@@ -91,6 +96,7 @@ class DropDownSearch extends React.Component{
     onItemClick: () => {},
     onOpen: () => {},
     onClose: () => {},
+    focusWidth: '400px',
   };
 
   constructor(props){
@@ -150,7 +156,8 @@ class DropDownSearch extends React.Component{
   }
 
   render(){
-    let {style, items, onItemClick, activeIndex, onSearchSubmit} = this.props;
+    let {style, items, onItemClick, activeIndex, focusWidth, 
+      onSearchSubmit} = this.props;
     let {open, focus} = this.state;
     
     let ddlStyle = {...styles.list};
@@ -161,7 +168,7 @@ class DropDownSearch extends React.Component{
     }
 
     if(focus){
-      style = {...style, width: '400px'} 
+      style = {...style, width: focusWidth} 
     }
 
     return (
