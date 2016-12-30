@@ -8,7 +8,6 @@ const styles = {
     position: 'relative',
     display: 'inline-block',
     height: '60px',
-    minWidth: '280px',
     maxWidth: '70%',
     width: '280px',
     transition: 'all 0.4s cubic-bezier(.17,.67,.17,.88)',
@@ -172,7 +171,9 @@ class DropDownSearch extends React.Component{
     }
 
     return (
-      <div style={{...styles.container, ...style}}>
+      <div style={{...styles.container, ...style}} 
+        ref={this.props.rootRef}
+      >
         <div style={styles.iconContainer}
           onClick={this.__onMenuClick}
         >

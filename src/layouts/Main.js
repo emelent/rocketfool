@@ -9,6 +9,9 @@ class Main extends React.Component{
     return(
       <div>
         <Header />
+        <div style={{height:'50vh', width: '100%'}}
+        >
+        </div>
       </div>
     );
   }

@@ -62,7 +62,7 @@ class SearchBox extends React.Component{
   };  
 
   static defaultProps = {
-    placeholder: 'Search here..',
+    placeholder: 'Search ..',
     width: '200px',
     height: '60px',
     focusWidth: '70%',

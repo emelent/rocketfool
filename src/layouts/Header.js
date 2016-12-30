@@ -4,9 +4,11 @@ import Radium from 'radium';
 import DropDownSearch from '../components/DropDownSearch';
 import Button from '../components/CustomButton';
 import MenuButton from '../components/MenuButton';
+import OverlayMenu from '../components/OverlayMenu';
 
 
 const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
+const menuItems = ['Home', 'Help', 'About', 'Login', 'Sign Up'];
 
 const styles = {
   container:{
@@ -20,7 +22,7 @@ const styles = {
 
   navbar:{
     position: 'fixed',
-    zIndex: '3',
+    zIndex: '2',
     height: '60px',
     top: '-60px',
     left: '0px',
@@ -38,12 +40,12 @@ const styles = {
     background: 'rgba(255,255,255,0.8)',
   },
   menuBtn: {
-    position: 'absolute',
+    position: 'fixed',
     right: '0px',
     top: '0px',
     width: '60px',
-    height: '100%',
-    cursor: 'pointer',
+    height: '60px',
+    zIndex: '5',
   },
 
   jumbotron:{
@@ -180,13 +182,17 @@ class Header extends React.Component{
 
     return (
       <div style={styles.container}>
+        <OverlayMenu title="Menu" 
+          items={menuItems}
+          visible={menuActive}
+        />
+        <MenuButton style={styles.menuBtn}
+          onClick={this.__onMenuBtnClick}
+          active={menuActive}
+        />
         <div style={navStyle}
           ref={(el) => {this.__navbar = el;}}
         >
-          <MenuButton style={styles.menuBtn}
-            onClick={this.__onMenuBtnClick}
-            active={menuActive}
-          />
           <DropDownSearch style={styles.searchBar}
             focusWidth="100%"
             items={dropDownItems}
