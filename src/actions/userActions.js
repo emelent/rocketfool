@@ -28,3 +28,13 @@ export function fetchUser(name){
     }
   };
 }
+
+export function fetchProfiles(){
+  return (dispatch) => {
+    axios.get(`${api}/profile/all`)
+      .then((response) => {
+      })
+      .catch((err) => {
+      });
+  }
+}

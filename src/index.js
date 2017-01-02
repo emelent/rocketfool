@@ -4,22 +4,28 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
- 
+
 import store from './store';
-import Main from './layouts/Main';
+import Landing from './views/Landing';
+import Search from './views/Search';
+import Browse from './views/Browse';
+import Profile from './views/Profile';
 
 import 'font-awesome/scss/font-awesome.scss';
 import './styles/style.scss';
 
-// Create an enhanced history that syncs navigation events with the store 
+// Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(hashHistory, store);
- 
+
 ReactDOM.render(
   <Provider store={store}>
     { /* Tell the Router to use our enhanced history */ }
     <Router history={history}>
-      <Route path="/" component={Main}>
+      <Route path="/" component={Landing}>
       </Route>
+      <Route path="/search/:query" component={Search} />
+      <Route path="/profile/:name" component={Profile} />
+      <Route path="/browse/" component={Browse} />
     </Router>
   </Provider>,
   document.getElementById('root')

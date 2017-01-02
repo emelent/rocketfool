@@ -5,10 +5,12 @@ import DropDownSearch from '../components/DropDownSearch';
 import Button from '../components/CustomButton';
 import MenuButton from '../components/MenuButton';
 import OverlayMenu from '../components/OverlayMenu';
+import TabBar from '../components/TabBar';
 
 
 const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
-const menuItems = ['Home', 'Help', 'About', 'Login', 'Sign Up'];
+const tabItems = ['Premium', 'Normal', 'Following'];
+const menuItems = ['Home','Browse', 'Help', 'About', '', 'Login', 'Sign Up'];
 
 const styles = {
   container:{
@@ -34,11 +36,6 @@ const styles = {
     top: '0px',
   },
 
-  searchBar:{
-    width: '100%',
-    maxWidth: '100%',
-    background: 'rgba(255,255,255,0.8)',
-  },
   menuBtn: {
     position: 'fixed',
     right: '0px',
@@ -46,6 +43,19 @@ const styles = {
     width: '60px',
     height: '60px',
     zIndex: '5',
+  },
+
+  searchBar:{
+    float: 'left',
+    width: '100%',
+    maxWidth: '100%',
+    background: 'rgba(255,255,255,0.8)',
+  },
+
+  tabBar: {
+    float: 'left',
+    width:'50%',
+    height:'60px',
   },
 
   jumbotron:{
@@ -93,19 +103,16 @@ const styles = {
   },
 
   btnContainer: {
-    position: 'absolute',
-    bottom: '0px',
     width: '100%',
-    background: '#fff',
     textAlign: 'center',
   },
 
   btn:{
     margin: '10px',
     padding: '1.5em 2em',
+    border: '2px solid #fff',
   },
   btnInverse:{
-    border: '2px solid #000',
     ':hover':{
       color: '#673AB7',
       backgroundColor: '#fff',
@@ -115,13 +122,21 @@ const styles = {
 
 @Radium
 class Header extends React.Component{
+
+  static propTypes = {
+    onLoginClick: React.PropTypes.func,
+    onSignUpClick: React.PropTypes.func,
+  };
+
   constructor(props){
     super(props);
     this.state = {
       activeIndex: 0,
       navbarVisible: false,
       menuActive: false,
+      tabIndex: 0,
     };
+    this.__onTabItemClick = this.__onTabItemClick.bind(this);
     this.__onDDItemClick = this.__onDDItemClick.bind(this);
     this.__onSearchSubmit = this.__onSearchSubmit.bind(this);
     this.__onMenuBtnClick= this.__onMenuBtnClick.bind(this);
@@ -154,7 +169,10 @@ class Header extends React.Component{
 
   __onDDItemClick(i){
     this.setState({activeIndex: i});
-    console.log('active => ', i);
+  }
+
+  __onTabItemClick(i){
+    this.setState({tabIndex: i});
   }
 
   __onSearchSubmit(text){
@@ -173,8 +191,9 @@ class Header extends React.Component{
   }
 
   render(){
-    const {activeIndex, menuActive, navbarVisible} = this.state;
-  
+    const {activeIndex, menuActive, navbarVisible, tabIndex
+    } = this.state;
+
     let navStyle = {...styles.navbar};
     if(navbarVisible){
       navStyle  = {...navStyle, ...styles.navbar__visible};
@@ -182,7 +201,7 @@ class Header extends React.Component{
 
     return (
       <div style={styles.container}>
-        <OverlayMenu title="Menu" 
+        <OverlayMenu title="Menu"
           items={menuItems}
           visible={menuActive}
         />
@@ -220,23 +239,22 @@ class Header extends React.Component{
             rootRef={(ref) => {this.__ddSearchBox= ref;}}
           />
         </div>
+        <div className="hide-xs" style={styles.spacer}></div>
         <div style={styles.descript}>
           Let people know about your business.
           <div style={styles.spacer} className="hide-xs"></div>
-          <div style={styles.scrollBtn}>
-            <i className="fa fa-angle-double-down"></i>
-          </div>
         </div>
         <div style={styles.btnContainer}>
           <Button style={styles.btn}
+            onClick={this.props.onSignUpClick}
           >
-            SIGN UP 
+            SIGN UP
           </Button>
           <Button style={{...styles.btn, ...styles.btnInverse}}
-            fgColor="#000"
+            fgColor="#fff"
             bgColor="transparent"
             hover={false}
-            onClick={this.__toggleNavbar}
+            onClick={this.props.onLoginClick}
           >
             LOGIN
           </Button>
