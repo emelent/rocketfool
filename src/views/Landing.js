@@ -1,4 +1,5 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -22,7 +23,11 @@ const mapDispatchToProps = (dispatch) =>{
 @connect(mapStateToProps, mapDispatchToProps)
 class Landing extends React.Component{
   render(){
-    const {googleSignIn} = this.props;
+    const {googleSignIn, user} = this.props;
+    if(user.loggedIn){
+      console.log('go to the next one');
+      hashHistory.push('/browse');
+    }
     return(
       <div>
         <Header onLoginClick={googleSignIn}/>

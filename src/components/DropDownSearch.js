@@ -41,7 +41,7 @@ const styles = {
 
   list:{
     position: 'absolute',
-    zIndex: '1',
+    zIndex: '5',
     width: '100%',
     maxHeight: '300px', 
     overflowY: 'scroll',

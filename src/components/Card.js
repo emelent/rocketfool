@@ -11,6 +11,12 @@ const styles = {
     margin: '10px',
     background: '#fff',
     boxShadow: `0 4px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
+    transition: 'all 0.3s cubic-bezier(.17,.67,.17,.88)',
+
+    ':hover':{
+      boxShadow: `0 14px 28px rgba(0,0,0,0.25), 
+        0 10px 10px rgba(0,0,0,0.22)`,
+    }
   },
   bgContainer:{
     position: 'absolute',
@@ -19,12 +25,17 @@ const styles = {
     height: '100%',
     width: '100%',
     overflow: 'hidden',
+    cursor: 'zoom-in',
   },
   bgImage:{
     position: 'absolute',
     top: '0px',
     left: '0px',
     width: '250%',
+
+    ':hover': {
+      width: '200%'
+    },
   },
   bgOverlay: {
     position: 'absolute',
@@ -111,21 +122,20 @@ class Card extends React.Component{
     let {title, style, bgColor, bgUrl, description, onCardClick,
       onActionClick} = this.props;
     
-    console.log(bgColor);
     let bgStyles = {
       ...styles.bgContainer,
       backgroundColor: bgColor,
     };
     let img = (bgUrl)? (
       <div>
-        <img style={styles.bgImage} src={bgUrl} alt="" />
+        <img key={2} style={styles.bgImage} src={bgUrl} alt="" />
         <div style={styles.bgOverlay}></div>
       </div>
     ) : null;
 
     return (
-       <div style={{...styles.container, ...style}}>
-          <div style={bgStyles}>
+       <div key={1} style={{...styles.container, ...style}}>
+          <div style={bgStyles} onClick={onCardClick}>
             {img}
             <div style={styles.description}>
               {description}
@@ -133,7 +143,7 @@ class Card extends React.Component{
           </div>
 
           <div style={styles.title}>{title}</div>
-          <div style={styles.btnAction}>
+          <div style={styles.btnAction} onClick={onActionClick}>
             <i className="fa fa-heart"></i>
           </div>
           <div style={styles.btnActionAfter}>

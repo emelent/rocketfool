@@ -7,7 +7,7 @@ const styles ={
 
   item: {
     display: 'inline-block',
-    padding: '20px',
+    padding: '0 20px',
     cursor: 'pointer',
   },
 
@@ -16,7 +16,6 @@ const styles ={
     bottom: '0px',
     left: '0px',
     width: '50px',
-    height: '10px',
     transition: 'all 0.4s cubic-bezier(.17,.67,.17,.88)',
   },
 }
@@ -30,19 +29,22 @@ class TabBar extends React.Component {
     bgColor: React.PropTypes.string,
     fgColor: React.PropTypes.string,
     align: React.PropTypes.oneOf(['left', 'right', 'center']),
-    underline: React.PropTypes.string,
-    shadow: React.PropTypes.bool
+    underlineColor: React.PropTypes.string,
+    shadow: React.PropTypes.bool,
+    height: React.PropTypes.string,
+    underlineHeight: React.PropTypes.string,
   };
 
   static defaultProps = {
     align: 'left',
     bgColor: '#fff',
     fgColor: '#000',
-    underline: '#673AB7',
-    active: null,
+    underlineColor: '#673AB7',
     shadow: false,
     onItemClick: () => {},
     activeIndex: -1,
+    height: '60px',
+    underlineHeight: '10px',
   };
 
   constructor(props) {
@@ -66,9 +68,13 @@ class TabBar extends React.Component {
   }
 
   __mapItems(el, i){
-    const {activeIndex, onItemClick} = this.props;
+    const {activeIndex, onItemClick, height} = this.props;
+    let style = {
+      ...styles.item,
+      lineHeight: height
+    }
     let newEl = (
-      <div key={i} style={styles.item}
+      <div key={i} style={style}
         ref={(el) => {
           if(activeIndex == i){
             this.__activeItem = el;
@@ -86,8 +92,14 @@ class TabBar extends React.Component {
     return newEl;
   }
 
+  componentDidMount(){
+    if(this.__activeItem){
+      this.__activeItem.click();
+    }
+  }
   render(){
-    let {shadow, items, bgColor, fgColor, align, style, onItemClick, underline} = this.props;
+    let {shadow, items, bgColor, fgColor, align, style, onItemClick, 
+      underlineColor, underlineHeight} = this.props;
     style = {...style};
     style = (shadow)? {...style,
       boxShadow: 'rgba(0,0,0,0.1) 1px 1px 1px'
@@ -105,7 +117,8 @@ class TabBar extends React.Component {
 
       >
         {items}
-        <div style={{...styles.underline, background: underline}}
+        <div style={{...styles.underline, 
+          background: underlineColor, height: underlineHeight}}
           ref={(el) => {this.__underline = el;}}
         ></div>
       </div>

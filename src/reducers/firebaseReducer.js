@@ -1,5 +1,4 @@
 import {types} from '../actions/firebaseActions';
-import {hashHistory} from 'react-router';
 
 const initialState = {
     loggedIn: false,
@@ -14,6 +13,7 @@ const initialState = {
 
 
 export default function(state=initialState, action){
+  let user;
   switch (action.type) {
     case types.LOG_IN_PENDING:
       return {
@@ -21,9 +21,9 @@ export default function(state=initialState, action){
         logInPending: true,
       };
     case types.LOG_IN_FULFILLED:
-      let user = action.payload.user;
+      user = action.payload.user;
       console.log('LOGGED IN => ', user);
-      hashHistory.push('/browse');
+      window.localStorage.setItem('user', JSON.stringify(user));
       
       return {
         ...state,
@@ -49,6 +49,7 @@ export default function(state=initialState, action){
         logOutPending: true,
       };
     case types.LOG_OUT_FULFILLED:
+      window.localStorage.clear();
       return {
         ...initialState,
       };
@@ -57,6 +58,19 @@ export default function(state=initialState, action){
         ...state,
         logOutPending: false,
       };
+
+    case types.CHECK_LOGIN:
+      user = JSON.parse(window.localStorage.getItem('user'));
+      if(user){
+        return {
+          ...initialState,
+          logIn: true,
+          name: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        }
+      }
+    
   }
 
   return state;

@@ -32,8 +32,8 @@ class CardGrid extends React.Component{
         bgColor={el.bgColor}
         description={el.description}
         title={el.title}
-        onCardClick={onCardClick}
-        onActionClick={onCardActionClick} 
+        onCardClick={() => onCardClick(i)}
+        onActionClick={() => onCardActionClick(i)} 
       />
     ));
   }

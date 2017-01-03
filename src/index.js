@@ -25,7 +25,7 @@ ReactDOM.render(
       </Route>
       <Route path="/search/:query" component={Search} />
       <Route path="/profile/:name" component={Profile} />
-      <Route path="/browse/" component={Browse} />
+      <Route path="/browse" component={Browse} />
     </Router>
   </Provider>,
   document.getElementById('root')

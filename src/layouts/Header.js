@@ -5,11 +5,9 @@ import DropDownSearch from '../components/DropDownSearch';
 import Button from '../components/CustomButton';
 import MenuButton from '../components/MenuButton';
 import OverlayMenu from '../components/OverlayMenu';
-import TabBar from '../components/TabBar';
 
 
 const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
-const tabItems = ['Premium', 'Normal', 'Following'];
 const menuItems = ['Home','Browse', 'Help', 'About', '', 'Login', 'Sign Up'];
 
 const styles = {
@@ -20,20 +18,6 @@ const styles = {
     backgroundAttachment: 'fixed',
     minHeight: '100vh',
     color: '#fff',
-  },
-
-  navbar:{
-    position: 'fixed',
-    zIndex: '2',
-    height: '60px',
-    top: '-60px',
-    left: '0px',
-    width: '100%',
-    paddingRight: '60px',
-    transition: 'all 0.4s cubic-bezier(.17,.67,.17,.88)',
-  },
-  navbar__visible:{
-    top: '0px',
   },
 
   menuBtn: {
@@ -50,12 +34,6 @@ const styles = {
     width: '100%',
     maxWidth: '100%',
     background: 'rgba(255,255,255,0.8)',
-  },
-
-  tabBar: {
-    float: 'left',
-    width:'50%',
-    height:'60px',
   },
 
   jumbotron:{
@@ -131,36 +109,12 @@ class Header extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      activeIndex: 0,
-      navbarVisible: false,
+      dropDownIndex: 0,
       menuActive: false,
-      tabIndex: 0,
     };
-    this.__onTabItemClick = this.__onTabItemClick.bind(this);
     this.__onDDItemClick = this.__onDDItemClick.bind(this);
     this.__onSearchSubmit = this.__onSearchSubmit.bind(this);
     this.__onMenuBtnClick= this.__onMenuBtnClick.bind(this);
-    this.__toggleNavbar = this.__toggleNavbar.bind(this);
-    this.__onScroll = this.__onScroll.bind(this);
-  }
-
-  __onScroll(){
-    //console.log(this.__ddSearchBox);
-    let rect = this.__ddSearchBox.getBoundingClientRect();
-    //console.log(rect);
-    if(!this.state.navbarVisible){
-      if(window.scrollY >= rect.bottom){
-        this.setState({navbarVisible: true});
-      }
-    }else{
-      if(window.scrollY < rect.bottom){
-        this.setState({navbarVisible: false});
-      }
-    }
-  }
-
-  __toggleNavbar(){
-    this.setState({navbarVisible: !this.state.navbarVisible});
   }
 
   __onMenuBtnClick(){
@@ -168,36 +122,16 @@ class Header extends React.Component{
   }
 
   __onDDItemClick(i){
-    this.setState({activeIndex: i});
-  }
-
-  __onTabItemClick(i){
-    this.setState({tabIndex: i});
+    this.setState({dropDownIndex: i});
   }
 
   __onSearchSubmit(text){
-    let cat = dropDownItems[this.state.activeIndex];
+    let cat = dropDownItems[this.state.dropDownIndex];
     alert(`You searched for '${text}' in '${cat}'`);
   }
 
-
-  componentDidMount(){
-    window.addEventListener('scroll', this.__onScroll);
-    this.__onScroll();
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('scroll', this.__onScroll);
-  }
-
   render(){
-    const {activeIndex, menuActive, navbarVisible, tabIndex
-    } = this.state;
-
-    let navStyle = {...styles.navbar};
-    if(navbarVisible){
-      navStyle  = {...navStyle, ...styles.navbar__visible};
-    }
+    const {dropDownIndex, menuActive} = this.state;
 
     return (
       <div style={styles.container}>
@@ -209,17 +143,6 @@ class Header extends React.Component{
           onClick={this.__onMenuBtnClick}
           active={menuActive}
         />
-        <div style={navStyle}
-          ref={(el) => {this.__navbar = el;}}
-        >
-          <DropDownSearch style={styles.searchBar}
-            focusWidth="100%"
-            items={dropDownItems}
-            onSearchSubmit={this.__onSearchSubmit}
-            onItemClick={this.__onDDItemClick}
-            activeIndex={activeIndex}
-          />
-        </div>
         <div style={styles.jumbotron}>
           <div style={styles.logoContainer}>
             <img src="/assets/images/logo.svg" alt=""
@@ -235,7 +158,7 @@ class Header extends React.Component{
             items={dropDownItems}
             onSearchSubmit={this.__onSearchSubmit}
             onItemClick={this.__onDDItemClick}
-            activeIndex={activeIndex}
+            activeIndex={dropDownIndex}
             rootRef={(ref) => {this.__ddSearchBox= ref;}}
           />
         </div>

@@ -6,6 +6,7 @@ import color from 'color';
 const styles = {
   base: {
     display: 'inline-block',
+    padding: '1.5em 2em',
     border: '0px',
     cursor: 'pointer',
     fontSize: '1em',
