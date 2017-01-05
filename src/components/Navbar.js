@@ -7,7 +7,6 @@ import OverlayMenu from '../components/OverlayMenu';
 import TabBar from '../components/TabBar';
 
 
-const tabItems = ['All', 'Verified', 'Following'];
 
 const styles = {
   container:{
@@ -55,32 +54,27 @@ class NavBar extends React.Component{
   static propTypes = {
     dropDownItems: PropTypes.array.isRequired,
     menuItems: PropTypes.array.isRequired,
+    dropDownIndex: PropTypes.number.isRequired,
+    onTabItemClick: PropTypes.func,
+    onDDItemClick: PropTypes.func,
+    tabItems: PropTypes.array.isRequired,
+    tabIndex: PropTypes.number.isRequired,
+    dropDownIndex: PropTypes.number.isRequired,
   };
 
   constructor(props){
     super(props);
     this.state = {
-      dropDownIndex: 0,
       menuActive: false,
-      tabIndex: 0,
     };
-    this.__onDDItemClick = this.__onDDItemClick.bind(this);
     this.__onMenuBtnClick= this.__onMenuBtnClick.bind(this);
     this.__onSearchSubmit = this.__onSearchSubmit.bind(this);
-    this.__onTabItemClick = this.__onTabItemClick.bind(this);
   }
 
-  __onTabItemClick(i){
-    this.setState({tabIndex: i});
-  }
 
 
   __onMenuBtnClick(){
     this.setState({menuActive: !this.state.menuActive});
-  }
-
-  __onDDItemClick(i){
-    this.setState({activeIndex: i});
   }
 
   __onSearchSubmit(text){
@@ -89,8 +83,11 @@ class NavBar extends React.Component{
   }
 
   render(){
-    const {style, dropDownItems, menuItems} = this.props;
-    const {menuActive, dropDownIndex, tabIndex} = this.state;
+    const {style, dropDownItems, menuItems,
+      onTabItemClick, onDDItemClick, dropDownIndex,
+      tabIndex, tabItems
+    } = this.props;
+    const {menuActive} = this.state;
 
     return (
       <div style={styles.container}>
@@ -107,7 +104,7 @@ class NavBar extends React.Component{
             focusWidth="100%"
             items={dropDownItems}
             onSearchSubmit={this.__onSearchSubmit}
-            onItemClick={this.__onDDItemClick}
+            onItemClick={onDDItemClick}
             activeIndex={dropDownIndex}
           />
         </div>
@@ -115,7 +112,7 @@ class NavBar extends React.Component{
           bgColor="#fff"
           items={tabItems}
           align="center"
-          onItemClick={this.__onTabItemClick}
+          onItemClick={onTabItemClick}
           activeIndex={tabIndex}
           height="40px"
           underlineHeight="4px"

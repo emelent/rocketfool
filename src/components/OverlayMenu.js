@@ -39,34 +39,45 @@ class OverlayMenu extends React.Component{
 
   static propTypes = {
     visible: React.PropTypes.bool.isRequired,
+    visibleStyle: React.PropTypes.object,
     items: React.PropTypes.array.isRequired,
     onItemClick: React.PropTypes.func,
     title: React.PropTypes.string,
+    showTitle: React.PropTypes.bool,
+    itemAlign: React.PropTypes.string,
   };
 
   static defaultProps = {
     onItemClick: () => {},
     title: 'Menu',
+    showTitle: true,
+    itemAlign: 'center',
   };
 
   renderItems(items, onItemClick){
     return items.map((el, i) => (
-      <div style={styles.item}
+      <div style={{...styles.item, textAlign: this.props.itemAlign}}
         key={i}>
         {el}
       </div>
     ));
   }
   render(){
-    let {style, visible, title, onItemClick, items} = this.props;
-    style = {...style, ...styles.container};
+    let {style, visible, title, onItemClick, items,
+      visibleStyle, showTitle, itemAlign} = this.props;
     if(visible){
-      style = {...style, ...styles.container__visible};
+      style = {...styles.container, ...styles.container__visible, 
+        ...style,
+        ...visibleStyle};
+    }else{
+      style = {...styles.container, ...style};
     }
 
     return (
       <div style={style}>
-        <div style={styles.title}>{title}</div>
+        {showTitle && 
+          <div style={styles.title}>{title}</div>
+        }
         {this.renderItems(items, onItemClick)}
       </div>
     );

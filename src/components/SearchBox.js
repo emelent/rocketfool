@@ -5,7 +5,7 @@ const styles = {
   container: {
     background: 'rgba(255,255,255,0.4)',
     color: '#555',
-    transition: 'all 0.4s ease',
+    transition: 'all 0.4s cubic-bezier(.17,.67,.17,.88)',
   },
   focusedContainer:{
     background: '#fff',
@@ -34,10 +34,6 @@ const styles = {
     fontFamily: 'Raleway',
     fontSize: '1.1em',
     background: 'none',
-
-    '::-webkit-input-placeholder':{
-      color: 'red'
-    },
 
     ':focus':{
       border: 'none',
@@ -133,6 +129,7 @@ class SearchBox extends React.Component{
         </div>
         <div style={styles.inputContainer}>
           <input type="text" placeholder={placeholder}
+            ref={this.props.rootRef}
             style={styles.input}
             onChange={this.__onChange}
             onFocus={this.__onFocus}

@@ -9,19 +9,19 @@ const styles = {
 
   stack: {
     background: '#000',
-    height: '3px',
-    width: '35px',
-    margin: '5px auto',
+    height: '2px',
+    width: '30px',
+    margin: '5px auto 5px auto',
     transition: `cubic-bezier(.17,.67,.17,.88) margin 0.3s,
       cubic-bezier(.17,.67,.17,.88) transform 0.3s`,
   },
 
   stack_1_active:{
-    marginTop: '12px',
+    margin: '12px auto 5px auto',
     transform: 'rotateZ(45deg)',
   },
   stack_2_active:{
-    marginTop: '-8px',
+    margin: '-8px auto 5px auto',
     transform: 'rotateZ(-45deg)',
   },
   stack_3_active:{
@@ -45,17 +45,21 @@ class MenuButton extends React.Component{
 
   render(){
     let {bgColor, fgColor, style, active, onClick} = this.props;
-    style = {...styles.container, ...style, 
-      backgroundColor: bgColor, color: fgColor};
-    let s1 = (active)? styles.stack_1_active: {};
-    let s2 = (active)? styles.stack_2_active:{};
-    let s3 = (active)? styles.stack_3_active:{};
+    style = {...styles.container, 
+      backgroundColor: bgColor, color: fgColor, ...style};
+    let stackStyle = {...styles.stack, backgroundColor: fgColor};
+    let s1 = (active)? {...stackStyle,...styles.stack_1_active}: 
+      stackStyle;
+    let s2 = (active)? {...stackStyle,...styles.stack_2_active}:
+      stackStyle;
+    let s3 = (active)? {...stackStyle,...styles.stack_3_active}:
+      stackStyle;
 
     return (
       <div style={style} onClick={onClick}>
-        <div style={{...styles.stack, ...s1}}></div>
-        <div style={{...styles.stack, ...s2}}></div>
-        <div style={{...styles.stack, ...s3}}></div>
+        <div style={s1}></div>
+        <div style={s2}></div>
+        <div style={s3}></div>
       </div>
     );
   }

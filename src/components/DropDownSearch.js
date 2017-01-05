@@ -146,7 +146,7 @@ class DropDownSearch extends React.Component{
       return (
         <div style={styles.listItem}
           key={i}
-          onClick={() => {onItemClick(i);}}
+          onClick={() => {onItemClick(i); this.__onClose();}}
         >
           {el}
         </div>
