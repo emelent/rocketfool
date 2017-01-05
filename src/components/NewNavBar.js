@@ -2,7 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 
 import SearchBox from './SearchBox';
-import OverlayMenu from './OverlayMenu';
 import MenuButton from './MenuButton';
 
 const catMenuItems = ['All', 'Magical', 'Factual', 'Invisible'];
@@ -13,11 +12,12 @@ const styles = {
     position: 'fixed',
     backgroundColor,
     top: 0,
-    left: 44,
+    left: 0,
     height: 60,
-    width: 'calc(100% - 44px)',
+    zIndex: 99,
+    width: '100%',
     overflow: 'hidden',
-    paddingRight: 44,
+    padding: '0 44px',
     '@media (min-width: 992px)': {
       paddingRight: 250,
     }
@@ -77,46 +77,35 @@ const styles = {
       left: 0,
     }
   },
-
-  catMenu:{
-    height: 'calc(100vh - 60px)',
-    top: '60px',
-    left: '-250px',
-    width: '250px',
-    textAlign: 'left',
-    transition: 'all 0.4s cubic-bezier(.17,.67,.17,.88)',
-  },
-
-  catMenuActive:{
-    left: '0px',
-  }
 };
 
+const voidFunc = () =>{};
 @Radium
 class NavBar extends React.Component{
+
+  static propTypes = {
+    onMenuBtnClick: React.PropTypes.func,
+    onSearchSubmit: React.PropTypes.func,
+    menuActive: React.PropTypes.bool,
+  };
+
+  static defaultProps ={
+    onMenuBtnClick: voidFunc,
+    onSearchSubmit: voidFunc,
+    menuActive: false,  
+  };
 
   constructor(props){
     super(props);
 
     this.state = {
       searchBoxFocus: false,
-      catMenuActive: false,  
-      catMenuIndex: 0,
     };
     this.__onSearchBoxFocus = this.__onSearchBoxFocus.bind(this);
     this.__onSearchBoxBlur = this.__onSearchBoxBlur.bind(this);
     this.__onSearchBoxSubmit = this.__onSearchBoxSubmit.bind(this);
-    this.__onCatItemClick = this.__onCatItemClick.bind(this);
-    this.__onCatMenuToggle = this.__onCatMenuToggle.bind(this);
   }
 
-  __onCatMenuToggle(){
-    this.setState({catMenuActive: !this.state.catMenuActive});
-  }
-
-  __onCatItemClick(i){
-    
-  }
   __onSearchBoxFocus(){
     this.setState({searchBoxFocus: true});
     this.__searchbox.focus();
@@ -128,14 +117,16 @@ class NavBar extends React.Component{
 
   __onSearchBoxSubmit(text){
     this.setState({searchBoxFocus: false});
-    if(text != '')
-      alert(text);
+    if(text != ''){
+      this.props.onSearchSubmit(text);
+    }
     this.__searchbox.blur();
   }
 
 
   render(){
-    const {searchBoxFocus, catMenuActive} = this.state;
+    const {searchBoxFocus} = this.state;
+    const {menuActive, onMenuBtnClick} = this.props;
 
     let searchBoxStyle = styles.searchBox;
     if(searchBoxFocus)
@@ -145,8 +136,8 @@ class NavBar extends React.Component{
     return (
       <div style={styles.container}>
         <MenuButton style={styles.menuBtn}
-          onClick={this.__onCatMenuToggle}
-          active={(window.innerWidth > 479) && catMenuActive}
+          onClick={onMenuBtnClick}
+          active={(window.innerWidth > 479) && menuActive}
           fgColor="#fff"
         />
         <div style={styles.item}>
@@ -165,13 +156,6 @@ class NavBar extends React.Component{
             placeholder="Search here..."
           />
         </div>
-        <OverlayMenu style={styles.catMenu}
-          items={catMenuItems}
-          visible={catMenuActive}
-          visibleStyle={styles.catMenuActive}
-          itemAlign="left"
-          showTitle={false}
-        />
       </div>
     );
   }
