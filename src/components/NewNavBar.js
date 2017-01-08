@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import Color from 'color';
 import {Link} from 'react-router';
 
 import SearchBox from './SearchBox';
@@ -61,25 +62,23 @@ class NavBar extends React.Component{
 
     let searchBoxStyle = styles.searchBox;
     let userBtn = null;
-    console.log('user => ', user);
     if(user.loggedIn){
       userBtn = (
         <Link style={{...styles.rightItem, ...styles.link}} 
           to="/settings"
+          key="user"
         >
           {user.name}
         </Link>
       );
     }else{
       userBtn = (
-        <div style={styles.rightItem} 
-        >
         <Link style={{...styles.rightItem, ...styles.link}} 
           to="/login"
+          key="login"
         >
           Login
         </Link>
-        </div>
       );
     }
     if(searchBoxFocus)
@@ -92,8 +91,9 @@ class NavBar extends React.Component{
           onClick={onMenuBtnClick}
           active={(window.innerWidth > 479) && menuActive}
           fgColor="#fff"
+          key="menuBtn"
         />
-        <div style={styles.item}>
+        <div style={styles.item} key="brand">
           Hello Kitty
         </div>
         {userBtn}
@@ -137,9 +137,14 @@ const styles = {
     height: 60,
     left: 0,
     top: 0,
+
+    ':hover':{
+      backgroundColor: Color(backgroundColor).darken(0.2).hexString(),
+    }
   },
   item: {
     display: 'inline-block',
+    padding: '0 15px',
     marginLeft: '10px',
     lineHeight: '60px',
     color: '#fff',
@@ -147,11 +152,14 @@ const styles = {
     fontSize: '1.em',
     textTransform: 'uppercase',
     cursor: 'pointer',
+    ':hover':{
+      background: 'rgba(0,0,0,0.2)',
+    }
   },
   rightItem:{
     float:'right',
     display: 'inline-block',
-    padding: '0 10px',
+    padding: '0 15px',
     lineHeight: '60px',
     color: '#fff',
     fontWeight: 'bold',

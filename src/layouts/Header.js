@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import {Link} from 'react-router';
 
 import DropDownSearch from '../components/DropDownSearch';
 import Button from '../components/CustomButton';
@@ -8,7 +9,14 @@ import OverlayMenu from '../components/OverlayMenu';
 
 
 const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
-const menuItems = ['Home','Browse', 'Help', 'About', '', 'Login', 'Sign Up'];
+const menuItems = [
+  'Browse', 'Help', 'About', '', 'Login', 'Sign Up'
+].map((el) => {
+  let route = '/' + el.toLowerCase().replace(' ', '');
+  return (
+    <Link to={route}>{el}</Link>
+  );
+})
 
 const styles = {
   container:{

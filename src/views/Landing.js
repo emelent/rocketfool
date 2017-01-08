@@ -30,7 +30,9 @@ class Landing extends React.Component{
     }
     return(
       <div>
-        <Header onLoginClick={() => hashHistory.push('/login')}/>
+        <Header onLoginClick={() => hashHistory.push('/login')}
+          onSignUpClick={() => hashHistory.push('/signup')}
+        />
       </div>
     );
   }

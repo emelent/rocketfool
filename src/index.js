@@ -28,6 +28,7 @@ ReactDOM.render(
       <Route path="/profile/:name" component={Profile} />
       <Route path="/browse" component={Browse} />
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={Login} />
     </Router>
   </Provider>,
   document.getElementById('root')
