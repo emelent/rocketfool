@@ -10,31 +10,12 @@ import Button from '../components/CustomButton';
 
 
 const tabItems = ['All', 'Verified', 'Following'];
+const filterItems= ['Accomodation', 'Catering', 'Entertainment', 'Transport',
+  'Travel', 'Weddings'
+];
 const dropDownItems = ['All', 'Some', 'Green Ones', 'Blue Ones'];
 const menuItems = ['Home','Browse', 'Help', 'About', '', 'Login', 'Sign Up'];
 
-
-const styles = {
-  body:{
-    width: '90%',
-    margin: '70px auto 0px auto',
-    textAlign: 'center',
-  },
-
-  title:{
-    marginTop: '100px',
-    fontSize: '1.5em',
-    padding: '15px',
-  },
-  cardGrid: {
-    display: 'inline-block',
-    width: '100%',
-    textAlign: 'center',
-  },
-  moreBtn: {
-    display: 'inline-block',
-  }
-};
 
 const mapStateToProps = (state) => {
   return {
@@ -50,15 +31,37 @@ const mapDispatchToProps = (dispatch) =>{
 @connect(mapStateToProps, mapDispatchToProps)
 @Radium
 class Browse extends React.Component{
-  
+
   constructor(props){
     super(props);
 
     this.state = {
       menuActve: false,
+      activeFilters: [],
     };
     this.__onMenuBtnClick = this.__onMenuBtnClick.bind(this);
     this.__onSearchSubmit = this.__onSearchSubmit.bind(this);
+    this.__onFilterItemClick = this.__onFilterItemClick.bind(this);
+    this.__onFilterApply = this.__onFilterApply.bind(this);
+    this.__onFilterClear = this.__onFilterClear.bind(this);
+  }
+
+  __onFilterApply(){
+  }
+
+  __onFilterClear(){
+    this.setState({activeFilters: []});
+  }
+
+  __onFilterItemClick(i){
+    let {activeFilters} = this.state;
+    let index = activeFilters.indexOf(filterItems[i]);
+    if(index < 0){
+      activeFilters.push(filterItems[i]);
+    }else{
+      activeFilters.splice(index, 1);
+    }
+    this.setState({activeFilters});
   }
 
   __onSearchSubmit(text){
@@ -90,19 +93,27 @@ class Browse extends React.Component{
     return cards;
   }
   render(){
-    const {menuActive} = this.state;
+    const {menuActive, activeFilters} = this.state;
+    const {user} = this.props;
+
     return (
       <div>
         <StyleRoot>
-          <NavBar 
+          <NavBar
             onMenuBtnClick={this.__onMenuBtnClick}
             onSearchSubmit={this.__onSearchSubmit}
             menuActive={menuActive}
+            user={user}
           />
         </StyleRoot>
-        <SlideMenu 
+        <SlideMenu
           show={menuActive}
           activeIndex={0}
+          activeFilters={activeFilters}
+          filterItems={filterItems}
+          onFilterItemClick={this.__onFilterItemClick}
+          onFilterApply={this.__onFilterApply}
+          onFilterClear={this.__onFilterClear}
         />
         <div style={styles.body}>
           <CardGrid style={styles.cardGrid}
@@ -120,5 +131,28 @@ class Browse extends React.Component{
     );
   }
 }
+
+const styles = {
+  body:{
+    width: '90%',
+    margin: '70px auto 0px auto',
+    textAlign: 'center',
+  },
+
+  title:{
+    marginTop: '100px',
+    fontSize: '1.5em',
+    padding: '15px',
+  },
+  cardGrid: {
+    display: 'inline-block',
+    width: '100%',
+    textAlign: 'center',
+  },
+  moreBtn: {
+    display: 'inline-block',
+  }
+};
+
 
 export default Browse;

@@ -8,18 +8,14 @@ import reducer from './reducers';
 
 const initialState = {
   user: {
-    fetching: false,
-    fetched: false,
-    user: {
-      id: null,
-      name: null, 
-      age: null
-    },
-    users: [
-      {id: 1, name: 'Bob', age: 32},
-      {id: 2, name: 'Barker', age: 43},
-    ],
-    error: null
+    loggedIn: false,
+    logInPending: false,
+    logOutPending: false,
+    name: null,
+    email: null,
+    uid: null,
+    businessProfile: null,
+    errorMessage: null,
   }
 };
 

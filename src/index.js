@@ -10,6 +10,7 @@ import Landing from './views/Landing';
 import Search from './views/Search';
 import Browse from './views/Browse';
 import Profile from './views/Profile';
+import Login from './containers/Login';
 
 import 'font-awesome/scss/font-awesome.scss';
 import './styles/style.scss';
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Route path="/search/:query" component={Search} />
       <Route path="/profile/:name" component={Profile} />
       <Route path="/browse" component={Browse} />
+      <Route path="/login" component={Login} />
     </Router>
   </Provider>,
   document.getElementById('root')

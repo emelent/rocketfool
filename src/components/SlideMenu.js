@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-const items= ['All', 'Some', 'Green Ones', 'Blue Ones'];
+import Button from '../components/CustomButton';
 
 const styles = {
   container: {
@@ -34,17 +34,25 @@ const styles = {
   },
 
   list:{
+    position: 'relative',
   },
 
-  listTitle:{
-    fontSize: '1.2em',
-    padding: 10,
+  listTitleContainer:{
     backgroundColor: '#eee',
+    padding: 10,
+  },
+  listTitle: {
+    fontSize: '1.2em',
+  },
+  btn:{
+    display: 'inline-block',
+    padding: '0.5em 1em',
   },
   item: {
+    position: 'relative',
     textAlign: 'left',
     color: '#000',
-    padding: '15px 20px',
+    padding: '15px 40px',
     fontSize: '1em',
     cursor: 'pointer',
 
@@ -53,9 +61,12 @@ const styles = {
     }
   },
   item__active:{
-    fontWeight: 'bold',
-    color: '#673AB7',
   },
+  check:{
+    color: '#673AB7',
+    position: 'absolute',
+    left: 10,
+  }
 }
 
 @Radium
@@ -63,39 +74,53 @@ class SlideMenu extends React.Component{
 
   static propTypes = {
     show: React.PropTypes.bool,
-    activeIndex: React.PropTypes.number,
-    onItemClick: React.PropTypes.func,
+    filterItems: React.PropTypes.array,
+    activeFilters: React.PropTypes.array,
+    onFilterItemClick: React.PropTypes.func,
+    onFilterApply: React.PropTypes.func,
+    onFilterClear: React.PropTypes.func,
     catIndex: React.PropTypes.number,
   };
 
   static defaultProps = {
     catIndex: 0,
-    onItemClick: () => {},
+    onFilterItemClick: () => {},
+    activeFilters: [],
   };
 
   constructor(props){
     super(props);
   }
 
-  renderItems(activeIndex, onItemClick){
-    let getStyle = (i) =>{
-      if(i == activeIndex){
+  renderfilterItems(filterItems, activeFilters, onFilterItemClick){
+    let isActive = (el) =>{
+      return activeFilters.indexOf(el) > -1;
+    };
+    let getStyle = (el) =>{
+      if(isActive(el)){
         return {...styles.item, ...styles.item__active};
       }
       return styles.item;
     };
-    return items.map((el, i) => (
+
+    return filterItems.map((el, i) => (
       <div key={i}
-        style={getStyle(i)}
-        onClick={() => onItemClick(i)}
+        style={getStyle(el)}
+        onClick={() => onFilterItemClick(i)}
       >
+        {isActive(el) &&
+          <i className="fa fa-check"
+            style={styles.check}
+          ></i>
+        }
         {el}
       </div>
     ));
   }
 
   render(){
-    let {style, show, activeIndex, onItemClick} = this.props;
+    let {style, filterItems, show, activeFilters, 
+      onFilterItemClick, onFilterClear, onFilterApply} = this.props;
     if(show){
       style = {...styles.container, 
         ...style, 
@@ -118,8 +143,20 @@ class SlideMenu extends React.Component{
         <div style={styles.title}>Help</div>
         <div style={styles.title}>About</div>
         <div style={styles.list}>
-          <div style={styles.listTitle}>Categories</div>
-          {this.renderItems(activeIndex, onItemClick)}
+          <div style={styles.listTitleContainer}>
+            <span style={styles.listTitle}>Filters</span>
+            <Button style={{...styles.btn, 
+              marginLeft: 50,
+              marginRight: 5}}
+              onClick={onFilterApply}
+            >
+              Apply
+            </Button>
+            <Button style={styles.btn}
+              onClick={onFilterClear}
+            >Clear</Button>
+          </div>
+          {this.renderfilterItems(filterItems, activeFilters, onFilterItemClick)}
         </div>
       </div>
     );

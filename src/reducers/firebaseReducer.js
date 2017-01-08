@@ -7,7 +7,6 @@ const initialState = {
     name: null,
     email: null,
     uid: null,
-    businessProfile: null,
     errorMessage: null,
 };
 
@@ -28,7 +27,7 @@ export default function(state=initialState, action){
       return {
         ...state,
         logInPending: false,
-        logIn: true,
+        loggedIn: true,
         name: user.displayName,
         email: user.email,
         uid: user.uid,
@@ -38,7 +37,7 @@ export default function(state=initialState, action){
       return {
         ...state,
         logInPending: false,
-        logIn: false,
+        loggedIn: false,
         errorMessage: action.payload.message,
       };
 
@@ -64,7 +63,7 @@ export default function(state=initialState, action){
       if(user){
         return {
           ...initialState,
-          logIn: true,
+          loggedIn: true,
           name: user.displayName,
           email: user.email,
           uid: user.uid,
