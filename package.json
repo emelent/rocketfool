@@ -7,7 +7,8 @@
     "test": "",
     "start": "webpack-dev-server --hot --inline --progress --colors --host '0.0.0.0' --config ./webpack.config.js",
     "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --profile --colors",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "deploy": "npm run build && firebase deploy"
   },
   "repository": {
     "type": "git",
