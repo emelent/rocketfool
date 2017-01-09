@@ -27,6 +27,7 @@ ReactDOM.render(
       <Route path="/search/:query" component={Search} />
       <Route path="/profile/:name" component={Profile} />
       <Route path="/browse" component={Browse} />
+      <Route path="/browse/:group" component={Browse} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Login} />
     </Router>
