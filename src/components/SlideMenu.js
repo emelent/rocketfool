@@ -139,9 +139,8 @@ class SlideMenu extends React.Component{
             style={styles.logoImg}
           />
         </div>
-        <div style={styles.title}>Home</div>
-        <div style={styles.title}>Help</div>
-        <div style={styles.title}>About</div>
+        <div style={styles.title}><Link to="/help">Help</Link></div>
+        <div style={styles.title}><Link to="/about">About</Link></div>
         <div style={styles.list}>
           <div style={styles.listTitleContainer}>
             <span style={styles.listTitle}>Filters</span>
