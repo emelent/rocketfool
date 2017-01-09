@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import {Link} from 'react-router';
 
 import Button from '../components/CustomButton';
 
