@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router';
 
-import {googleSignIn} from '../actions/firebaseActions';
+import {googleSignIn} from '../actions/userActions';
 
 
 const mapStateToProps = (state) => {

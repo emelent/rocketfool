@@ -1,49 +1,76 @@
-const initialState = {
-  fetching: false,
-  fetched: false,
-  user: {
-    id: null,
-    name: null, 
-    age: null
-  },
-  users: [],
-  error: null
+import types from '../types';
+
+export const initialState = {
+    loggedIn: false,
+    logInPending: false,
+    logOutPending: false,
+    name: null,
+    email: null,
+    uid: null,
+    errorMessage: null,
 };
 
-export default function(state=initialState,  action){
-  switch(action.type){
-    case 'FETCH_USERS_PENDING':
-      return {
-        ...state, 
-        fetching: true
-      };
-      break;
 
-    case 'FETCH_USERS_REJECTED':
+export default function(state=initialState, action){
+  let user;
+  switch (action.type) {
+    case types.LOG_IN_PENDING:
       return {
-        ...state, 
-        fetching: false, 
-        error: action.payload
-      };
-      break;
-    
-    case 'FETCH_USERS_FULFILLED':
-      return {
-        ...state, 
-        fetching: false, 
-        fetched: true, 
-        users: action.payload
-      };
-      break;
-
-    case 'FETCH_USER_FULFILLED':
-      return{
         ...state,
-        fetching: false,
-        fetched: true,
-        user: action.payload
+        logInPending: true,
       };
+    case types.LOG_IN_FULFILLED:
+      user = action.payload.user;
+      console.log('LOGGED IN => ', user);
+      window.localStorage.setItem('user', JSON.stringify(user));
+      
+      return {
+        ...state,
+        logInPending: false,
+        loggedIn: true,
+        name: user.displayName,
+        email: user.email,
+        uid: user.uid,
+      };
+    case types.LOG_IN_REJECTED:
+      console.log(action.payload.message);
+      return {
+        ...state,
+        logInPending: false,
+        loggedIn: false,
+        errorMessage: action.payload.message,
+      };
+
+
+    case types.LOG_OUT_PENDING:
+      return {
+        ...state,
+        logOutPending: true,
+      };
+    case types.LOG_OUT_FULFILLED:
+      window.localStorage.clear();
+      return {
+        ...initialState,
+      };
+    case types.LOG_IN_REJECTED:
+      return {
+        ...state,
+        logOutPending: false,
+      };
+
+    case types.CHECK_LOGIN:
+      user = JSON.parse(window.localStorage.getItem('user'));
+      if(user){
+        return {
+          ...initialState,
+          loggedIn: true,
+          name: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        }
+      }
+    
   }
 
   return state;
-};
+}

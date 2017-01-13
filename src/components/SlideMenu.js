@@ -81,6 +81,7 @@ class SlideMenu extends React.Component{
     onFilterApply: React.PropTypes.func,
     onFilterClear: React.PropTypes.func,
     catIndex: React.PropTypes.number,
+    loggedIn: React.PropTypes.bool,
   };
 
   static defaultProps = {

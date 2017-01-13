@@ -1,40 +1,40 @@
-import axios from 'axios';
+import firebase from '../firebase';
+import {hashHistory} from 'react-router';
 
-const api = 'http://rest.learncode.academy/api';
-export function fetchUsers(){
-  return (dispatch) =>{
-    dispatch({type: 'FETCH_USERS_PENDING'});
-    let users = window.localStorage.getItem('users');
-    if(!users){
-      axios.get(`${api}/wstern/users`)
-        .then((response) => {
-          window.localStorage.setItem('users', JSON.stringify(response.data));
-          dispatch({type: 'FETCH_USERS_FULFILLED', payload: response.data});
-        })
-        .catch((err) => {
-          dispatch({type: 'FETCH_USERS_REJECTED', payload: err})  
+import types from '../types';
+
+
+export function startListeningForAuth(){
+  return (dispatch) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({type: types.LOG_IN_FULFILLED,
+          payload: user
         });
-    }else{
-      dispatch({type: 'FETCH_USERS_FULFILLED', payload: JSON.parse(users)});
-    }
-  }
-}
+      } else {
 
-export function fetchUser(name){
-  return {
-    type: 'FETCH_USER_FULFILLED',
-    payload: {
-      name
-    }
+        dispatch({type: types.LOG_IN_REJECTED});
+      }
+    });
+  };
+};
+
+export function checkLogin(){
+  return (dispatch) => {
+    dispatch({type: types.CHECK_LOGIN});
   };
 }
 
-export function fetchProfiles(){
+export function googleSignIn(){
   return (dispatch) => {
-    axios.get(`${api}/profile/all`)
-      .then((response) => {
-      })
-      .catch((err) => {
-      });
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then((result) =>{
+      hashHistory.push('/browse');
+      dispatch({type: types.LOG_IN_FULFILLED, payload: result});
+    }).catch((error) => {
+      dispatch({type: types.LOG_IN_REJECTED, payload: error});
+    });
+
+    dispatch({type: types.LOG_IN_PENDING});
   }
 }

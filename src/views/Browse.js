@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import NavBar from '../components/NewNavBar';
-import CardGrid from '../layouts/CardGrid';
+import CardGrid from '../containers/CardGrid';
 import SlideMenu from '../components/SlideMenu';
 import Button from '../components/CustomButton';
 
@@ -121,17 +121,17 @@ class Browse extends React.Component{
             onCardActionClick={this.__onCardActionClick}
             cardData={this.getCardData()}
           />
-          <Button style={styles.moreBtn}
-            bgColor="#7E57C2"
-          >
-            Show More
-          </Button>
         </div>
       </div>
     );
   }
 }
 
+          //<Button style={styles.moreBtn}
+            //bgColor="#7E57C2"
+          //>
+            //Show More
+          //</Button>
 const styles = {
   body:{
     width: '90%',
@@ -147,7 +147,7 @@ const styles = {
   cardGrid: {
     display: 'inline-block',
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   moreBtn: {
     display: 'inline-block',

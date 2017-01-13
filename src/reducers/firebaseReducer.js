@@ -1,6 +1,6 @@
-import {types} from '../actions/firebaseActions';
+import types from '../types';
 
-const initialState = {
+export const initialState = {
     loggedIn: false,
     logInPending: false,
     logOutPending: false,
